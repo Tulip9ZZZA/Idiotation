@@ -1,0 +1,8 @@
+﻿blocks/
+sessions/*
+!sessions/.gitkeep
+node_modules/
+.env
+__pycache__/
+*.log
+
