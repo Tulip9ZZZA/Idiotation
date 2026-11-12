@@ -17,10 +17,35 @@ world) and **Terrain** (five lenses + a hostile gate over those facts).
 | Firecrawl | Scrape the gate's evidence into clean, LLM-ready data | AGPL-3.0 — used as an external service/API only; its code is never vendored into this repo | hosted: firecrawl.dev · MCP: `opencode mcp add firecrawl --global --url https://mcp.firecrawl.dev/<key>/v2.0/mcp` · optional clone under `blocks/firecrawl` |
 | Maxxing V2 Gauntlet | The five lenses + the Terrain Gate protocol | MIT | `blocks/maxxing-itout` (branch `v2-gauntlet`) — `docs/TERRAIN_GATE.md`, `skills/terrain-scout` |
 
-**Fallback rule:** if Firecrawl is not configured, use webfetch/websearch but keep the
-same evidence discipline below (URL + date for every material claim). If the Maxxing
-repo is not cloned, run the lens and gate protocol manually — this file contains the
-full protocol — and note in TERRAIN_MAP.md that the mechanical checks did not run.
+**Firecrawl is REQUIRED for this skill.** Gate 0's one job is acquiring facts, and
+Firecrawl is the facts engine: search + scrape at scale, clean LLM-ready output. It
+never generates or judges ideas — it only acquires the information every later gate
+forges ideas from. The models in those gates interpret what Firecrawl acquired; they
+never invent.
+
+Setup (pick one, ~5 minutes):
+
+1. **Hosted (fastest):** key at firecrawl.dev → set `FIRECRAWL_API_KEY` → add the MCP
+   server: `opencode mcp add firecrawl --global --url https://mcp.firecrawl.dev/<key>/v2.0/mcp`
+2. **Self-hosted:** clone under `blocks/` and run its docker-compose (see firecrawl's
+   `SELF_HOST.md`), point this skill at your instance.
+3. **SDK/CLI:** any Firecrawl SDK works; save raw scrapes to
+   `sessions/<date>-<gate>/evidence/`.
+
+**Degraded mode — only if the user explicitly refuses setup.** Run with plain
+webfetch/websearch under the same evidence discipline, and print this banner at the
+top of TERRAIN_MAP.md and beside the verdict:
+
+> DEGRADED RUN — no Firecrawl. Bulk scraping and search-at-scale are unavailable,
+> coverage is shallow, and the verdict is capped at **REVISE**: this run can never
+> claim TERRAIN CLEAR. Fix: set up Firecrawl (5 min) and re-run.
+
+So: the skill can physically run without Firecrawl, but it **cannot do its job** —
+no scaled evidence, no clear verdict. Proper and effective use = Firecrawl configured.
+
+If the Maxxing repo is not cloned, the lens/gate protocol still runs manually from
+this file (it is embedded below) — note in TERRAIN_MAP.md that the mechanical checks
+did not run. That fallback changes nothing about the Firecrawl requirement.
 
 ## When to use / when not
 
@@ -28,6 +53,8 @@ full protocol — and note in TERRAIN_MAP.md that the mechanical checks did not 
   deadline, product launch, investor pitch, client RFP) and nothing is mapped yet.
 - **Do not use:** to generate or judge ideas — that is `/idea-forge` with `/good-idea`.
 - **Do not use** to prove market demand. Recon maps the gate; it never validates a thesis.
+- **Do not run silently without Firecrawl.** Ask to set it up first (5 minutes), or
+  run the explicit DEGRADED mode above — never pretend a degraded run is a full one.
 
 ## Steps
 
@@ -163,8 +190,9 @@ VERDICT: TERRAIN CLEAR / REVISE / TERRAIN BLOCKED
 
 ## Rules
 
-- **Firecrawl (or your fetch tools) are the only source of facts. The models interpret;
-  they do not invent.**
+- **Firecrawl is the required evidence engine.** A TERRAIN CLEAR verdict is only
+  valid on a non-degraded run. Firecrawl acquires facts; the models interpret; they
+  do not invent.
 - Do not proceed to Gate 1 while a material rule or dependency remains UNKNOWN.
 - Cite the exact URL and date for every material claim.
 - Never mark research complete because the report looks long. **Volume never enters

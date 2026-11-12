@@ -6,10 +6,14 @@
   (Claude Code). Run `scripts/sync-skills.ps1` after editing any skill.
 - Optional blocks: run `scripts/install-blocks.ps1`. Every skill has a native
   fallback and works without them.
-- Optional Firecrawl: set `FIRECRAWL_API_KEY` or add the MCP server. Without it,
-  `/gate-recon` uses webfetch/websearch with the same evidence discipline.
+- **REQUIRED for `/gate-recon`:** Firecrawl — hosted key (`FIRECRAWL_API_KEY`), MCP
+  server, or self-hosted instance. Without it the run is marked **DEGRADED** and the
+  verdict is capped at **REVISE**; it can never claim TERRAIN CLEAR. Set it up (5
+  min) before recon, or explicitly accept the degraded run.
 - Output documents land in the repo root of the folder you run in; archive finished
   runs into `sessions/<date>-<gate>/`.
+- **After every run** — good, fail, or example — log it into `evals/cases/` (see
+  `evals/README.md`). The pipeline only improves from logged cases.
 
 ## The full sequence (a weekend-before-the-event)
 

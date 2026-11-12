@@ -62,10 +62,15 @@ The `good-idea` skill is not a stage — it is the **lens applied at every gate*
 # 1. use this repo as your working folder (skills live in .opencode/skills + .claude/skills)
 cd Idiotation
 
-# 2. optionally clone the five engine blocks (all skills work without them)
+# 2. REQUIRED for /gate-recon: configure Firecrawl (5 min) - hosted key OR MCP:
+#      set FIRECRAWL_API_KEY   (get key at firecrawl.dev)
+#      opencode mcp add firecrawl --global --url https://mcp.firecrawl.dev/<key>/v2.0/mcp
+#    without it, recon runs DEGRADED and can never claim TERRAIN CLEAR
+
+# 3. optionally clone the five engine blocks (protocol fallbacks are embedded in the skills)
 powershell -ExecutionPolicy Bypass -File scripts\install-blocks.ps1     # or: bash scripts/install-blocks.sh
 
-# 3. optionally install your everyday skills globally (brand, logo, readme, matt pocock engineering)
+# 4. optionally install your everyday skills globally (brand, logo, readme, matt pocock engineering)
 powershell -ExecutionPolicy Bypass -File scripts\install-global-skills.ps1 -ZipsDir "$HOME\Downloads"
 ```
 
@@ -88,7 +93,7 @@ Idiotation orchestrates five best-in-class tools, each doing the one job it does
 
 | Block | Owner of | License | Usage |
 |---|---|---|---|
-| [Firecrawl](https://github.com/firecrawl/firecrawl) | Gate 0 evidence | AGPL-3.0 | external API/MCP only — **never vendored** |
+| [Firecrawl](https://github.com/firecrawl/firecrawl) | Gate 0 evidence — **REQUIRED** | AGPL-3.0 | external API/MCP only — **never vendored** |
 | [Maxxing V2 Gauntlet](https://github.com/Tulip9ZZZA/maxxing-itout) (branch `v2-gauntlet`) | 5 lenses + Terrain Gate | MIT | cloned under `blocks/`; protocol also runs natively |
 | [Superpowers](https://github.com/obra/superpowers) | brainstorming + planning discipline | MIT | cloned under `blocks/`; discipline embedded in skills |
 | Council protocol (idea from [karpathy/llm-council](https://github.com/karpathy/llm-council)) | multi-model blind review | **no license** | the *idea* only — our implementation is original, nothing copied |
@@ -108,7 +113,12 @@ Idiotation/
 │   ├── ARCHITECTURE.md        # why sequential pressure beats the crowd
 │   ├── USAGE.md               # run sequence + one-shot variant + checklists
 │   └── templates/             # the 6 output-document templates
-├── scripts/                   # install-blocks · install-global-skills · sync-skills
+├── evals/                     # log every run: the good, the fail, the example
+│   ├── README.md              # how to log cases and turn them into evals
+│   ├── templates/             # the case report template
+│   ├── scenarios/             # reusable test situations with failure signatures
+│   └── cases/                 # your real logged runs
+├── scripts/                   # install-blocks · install-global-skills · sync-skills · eval-run
 ├── assets/                    # logo mark, tile, favicon, banner (pure SVG)
 └── sessions/                  # your runs: evidence + reports archive here
 ```

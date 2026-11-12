@@ -41,8 +41,10 @@ shows) · loop (it compounds). Verdict scale: GOOD / NICE / BAD / MOOD.
 
 ### 1. Recon Agent — Firecrawl + Maxxing V2
 - **Skill:** `/gate-recon`
-- **Blocks:** Firecrawl (AGPL-3.0 — used as an external API/MCP only, never vendored)
-  + Maxxing V2 five lenses and Terrain Gate (MIT).
+- **Blocks:** Firecrawl (**REQUIRED** — the facts engine: search + scrape evidence
+  only; AGPL-3.0, external API/MCP, never vendored) + Maxxing V2 five lenses and
+  Terrain Gate (MIT).
+- **Without Firecrawl:** DEGRADED run, verdict capped at REVISE, never TERRAIN CLEAR.
 - **Output:** `GATE_PROFILE.md`, `TERRAIN_MAP.md`
 - **Does not:** generate or kill ideas. Facts only; models interpret, never invent.
 
@@ -100,6 +102,8 @@ mattpocock/skills, MIT):
 - **Firecrawl gives facts; models give structured disagreement; neither replaces a spike.**
 - Honest UNKNOWN > guessed fact. Honest TERRAIN BLOCKED > confident noise.
 - Archive finished runs into `sessions/<date>-<gate>/`.
+- **Log every run — good, fail, or example — into `evals/cases/`.** The pipeline
+  improves only from logged use; see `evals/README.md`.
 
 ## Dependency compliance
 
