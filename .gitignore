@@ -3,6 +3,20 @@ sessions/*
 !sessions/.gitkeep
 node_modules/
 .env
+# --- secret-shield: never let keys or credentials enter the repo ---
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*credentials*
+*secret*
+*token*
+!**/secret-scan.py
+!evals/**
+~$*
 __pycache__/
 *.log
 

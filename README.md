@@ -85,6 +85,11 @@ Then, in a session, run the gates in sequence:
 /grill-with-docs → /to-spec → /to-tickets → /tdd → /implement → /code-review
 ```
 
+**Before pushing this repo anywhere:** `python scripts/secret-scan.py` — scans the
+working tree AND full git history for API keys, tokens, private keys, and personal
+info. `evals/README.md` covers `promptfoo` (prompt-security redteam) and `strix`
+(agentic pentest) as optional deeper layers, run locally with your own keys, never committed.
+
 **One-shot variant (same-day event):** 15 min recon (one lens) → 30 min forge (5 theses → top 1) → 20 min kill (one real spike) → 20 min roast (4 judges) → 10 min lock. Same chain, compressed.
 
 ## The five engine blocks
