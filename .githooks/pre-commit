@@ -1,0 +1,18 @@
+#!/bin/sh
+# Idiotation pre-commit hook - nothing enters a commit unscanned.
+# Install once:  git config core.hooksPath .githooks
+# Scans the working tree for secrets/PII before every commit.
+
+if command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  PY=python3
+fi
+
+"$PY" scripts/secret-scan.py || {
+  echo ""
+  echo "pre-commit: secret scan FAILED - commit aborted."
+  echo "Fix the findings (or, if they are false positives, tighten the"
+  echo "allowlist in scripts/secret-scan.py in the same commit)."
+  exit 1
+}

@@ -63,6 +63,16 @@ evals/
 ├── templates/
 │   └── case.template.md # the run report
 ├── scenarios/           # reusable test situations + failure signatures
+├── fixtures/            # good/ + bad/ doc sets CI audits on every push
 ├── cases/               # YOUR logged runs (one md per run)
 └── (scorecards are pasted into each case)
 ```
+
+## The auditor is itself audited
+
+`evals/fixtures/good/` holds a complete, honest run; `evals/fixtures/bad/` holds
+the same run seeded with real violations (head spike, polite roast, guessed
+facts, degraded-clear contradiction). `python scripts/eval-selftest.py` proves
+on every push that the auditor **still passes the honest one and still fails
+the sabotaged one**. If you change `eval-run.py` or the fixtures, this
+self-test is the check that your auditor did not go blind.

@@ -1,0 +1,12 @@
+# Normalized line endings: text files store LF, check out LF.
+# The pre-commit hook MUST stay LF or sh aborts with '\r: command not found'.
+*.py    text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.sh    text eol=lf
+*.svg   text eol=lf
+*.json  text eol=lf
+*.jsonc text eol=lf
+*.ps1   text eol=lf
+.githooks/** text eol=lf

@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/skills-6%20%2B%20AGENTS.md-7C3AED?style=flat-square" alt="6 skills + AGENTS.md">
   <img src="https://img.shields.io/badge/runs_in-OpenCode%20%7C%20Claude%20Code-101828?style=flat-square" alt="Runs in OpenCode and Claude Code">
   <img src="https://img.shields.io/badge/proof-spike%20required-22C55E?style=flat-square" alt="A spike is required">
+  <a href=".github/workflows/security.yml"><img src="https://img.shields.io/badge/security-CI%20enforced-22C55E?style=flat-square" alt="Security checks enforced in CI"></a>
 </p>
 
 ---
@@ -87,7 +88,21 @@ Then, in a session, run the gates in sequence:
 
 **Before pushing this repo anywhere:** `python scripts/secret-scan.py` — scans the
 working tree AND full git history for API keys, tokens, private keys, and personal
-info. `evals/README.md` covers `promptfoo` (prompt-security redteam) and `strix`
+info. This is not just a suggestion — **CI enforces it** on every push and PR
+(`.github/workflows/security.yml`): secret scan (tree + history), semgrep
+(`p/secrets` + `p/security-audit`), prompt-guard regression
+(`scripts/skill-guards.py`), and an auditor self-test
+(`scripts/eval-selftest.py`) that proves `eval-run.py` still catches seeded
+sabotage. GitHub-side **secret scanning + push protection** are also enabled, so
+a secret is blocked at the server even if every local layer is bypassed.
+
+Optional local enforcement (scan before every commit, not just push):
+
+```powershell
+git config core.hooksPath .githooks
+```
+
+Found a security issue? See `SECURITY.md` — private disclosure only. `evals/README.md` covers `promptfoo` (prompt-security redteam) and `strix`
 (agentic pentest) as optional deeper layers, run locally with your own keys, never committed.
 
 **One-shot variant (same-day event):** 15 min recon (one lens) → 30 min forge (5 theses → top 1) → 20 min kill (one real spike) → 20 min roast (4 judges) → 10 min lock. Same chain, compressed.
